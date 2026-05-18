@@ -1,4 +1,4 @@
-# digitalservice
+# Digitalservice
 
 Simple PHP MySQL project with `.env` database configuration support.
 
@@ -17,23 +17,14 @@ Simple PHP MySQL project with `.env` database configuration support.
 
 ```txt
 digitalservice/
-│
 ├── .env
 ├── env.php
 ├── db.php
 ├── index.php
 ├── README.md
 ├── .gitignore
-│
-├── includes/
-│   └── db.php
-│
 ├── uploads/
-├── storage/
 ├── logs/
-│
-├── vendor/
-└── node_modules/
 ```
 
 ---
@@ -154,3 +145,5 @@ git push -u origin main
 # License
 
 MIT
+
+This is use for open source and if anyone wants to contribute please do.
