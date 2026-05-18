@@ -7,3 +7,51 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin git@github.com:bittuvwxyz/digitalservice.git
 git push -u origin main
+
+.gitignore
+
+/vendor/
+/node_modules/
+.env
+env.php
+db.php
+/includes/db.php
+/uploads/
+/storage/
+/logs/
+*.log
+.DS_Store
+Thumbs.db
+
+Use any where
+<?php
+require_once 'db.php';
+$sql = "SELECT * FROM users";
+$result = mysqli_query($conn, $sql);
+
+db.php
+<?php
+require_once 'env.php';
+$conn = mysqli_connect(
+    DB_HOST,
+    DB_USER,
+    DB_PASS,
+    DB_NAME
+);
+if (!$conn) {
+    die("Database connection failed");
+}
+
+.env
+DB_HOST=xxx
+DB_NAME=xxx
+DB_USER=xxx
+DB_PASS=xxx
+
+env.php
+<?php
+$env = parse_ini_file(__DIR__ . '/.env');
+define('DB_HOST', $env['DB_HOST']);
+define('DB_NAME', $env['DB_NAME']);
+define('DB_USER', $env['DB_USER']);
+define('DB_PASS', $env['DB_PASS']);
