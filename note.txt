@@ -55,3 +55,82 @@ define('DB_HOST', $env['DB_HOST']);
 define('DB_NAME', $env['DB_NAME']);
 define('DB_USER', $env['DB_USER']);
 define('DB_PASS', $env['DB_PASS']);
+
+Database name website
+
+run sql query
+
+CREATE TABLE blogs (
+    blog_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    blog_title VARCHAR(255) NOT NULL,
+    blog_short_description TEXT,
+    blog_post LONGTEXT NOT NULL,
+    blog_category VARCHAR(100),
+    blog_author VARCHAR(100),
+    blog_views BIGINT DEFAULT 0,
+    blog_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    blog_updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+Dummy text for blog
+
+INSERT INTO blogs (
+
+    blog_title,
+    blog_short_description,
+    blog_post,
+    blog_category,
+    blog_author,
+    blog_views
+
+) VALUES (
+
+    'Getting Started With PHP',
+
+    'Learn basics of PHP programming language.',
+
+    'PHP is a popular server-side scripting language used for web development. In this tutorial we will learn variables, loops, functions, arrays, forms, MySQL connection and more.',
+
+    'Programming',
+
+    'Admin',
+
+    120
+
+),
+
+(
+
+    'Introduction To MySQL',
+
+    'Learn how MySQL database works.',
+
+    'MySQL is an open-source relational database management system. It is widely used with PHP applications. This blog explains tables, rows, columns, SQL queries and database connections.',
+
+    'Database',
+
+    'Admin',
+
+    95
+
+),
+
+(
+
+    'Build Simple Blog Using PHP',
+
+    'Create your own blog website using PHP and MySQL.',
+
+    'In this article we create a simple blogging system with admin panel, post management, database integration and frontend blog listing page using procedural PHP.',
+
+    'Web Development',
+
+    'Admin',
+
+    210
+
+);
+
+-------
