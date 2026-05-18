@@ -5,12 +5,12 @@ require_once 'db.php';
 require_once 'config/config.php';
 require_once 'includes/functions.php';
 
-$page = $_GET['page'] ?? 'home';
+$page = $_GET['page'] ?? 'index';
 
 $allowed_pages = [
-    'home',
-    'about',
-    'contact'
+    'index',
+    'post',
+    'blog'
 ];
 
 if (!in_array($page, $allowed_pages)) {
@@ -19,6 +19,4 @@ if (!in_array($page, $allowed_pages)) {
 
 require_once 'includes/header.php';
 require_once 'includes/homelanding.php';
-// require_once 'includes/navbar.php';
-require_once 'pages/' . $page . '.php';
 require_once 'includes/footer.php';
