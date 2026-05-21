@@ -7,7 +7,7 @@
 </head>
 <body>
 <h3>Register</h3>
-<form method="POST" action="auth/register.php" onsubmit="return validateForm()">
+<form method="POST" action="/auth/register.php" onsubmit="return validateForm()">
 <label>Username</label>
 <input type="text" name="username" id="username" class="form-control" required>
 <label class="form-label">Email</label>

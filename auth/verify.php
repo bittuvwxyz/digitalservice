@@ -2,26 +2,27 @@
 include '../config/db.php';
 include '../includes/functions.php';
 
-$token = $_GET['token'];
+if (isset($_GET['token'])) {
+    $token = $_GET['token'];
+    $stmt = $conn->prepare("SELECT id FROM users WHERE verification_token = ?");
+    $stmt->bind_param("s", $token);
+    $stmt->execute();
 
-$stmt = $conn->prepare("SELECT * FROM email_verifications WHERE token=?");
-$stmt->bind_param("s", $token);
-$stmt->execute();
-$result = $stmt->get_result();
+    $result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-
-    if (!isTokenExpired($row['expires_at'])) {
-
-        $conn->query("UPDATE users SET is_verified=1 WHERE id=" . $row['user_id']);
-        $conn->query("DELETE FROM email_verification WHERE user_id=" . $row['user_id']);
-
-        echo "Email verified!";
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $update = $conn->prepare("UPDATE users SET verified = 1, verification_token = NULL WHERE id = ?");
+        $update->bind_param("i", $row['id']);
+        if ($update->execute()) {
+            echo "Email verified successfully!";
+        } else {
+            echo "Update failed";
+        }
     } else {
-        echo "Token expired";
+        echo "Invalid token";
     }
 } else {
-    echo "Invalid token";
+    echo "No token provided";
 }
 ?>

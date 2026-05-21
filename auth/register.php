@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require '../db.php';
+require '../config/db.php';
 require '../includes/functions.php';
 require '../includes/mail.php';
 
@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username'] ?? '');
     $email    = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
+    $token = $_POST['token'] ?? '';
     
     if (!$username || !$email || !$password) {
         die("All fields are required");
@@ -32,30 +33,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $token = bin2hex(random_bytes(32));
 
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, verification_token) VALUES (?, ?, ?, ?)");
     if (!$stmt) die("Insert prepare failed: " . $conn->error);
-    $stmt->bind_param("sss", $username, $email, $hashedPassword);
+    $stmt->bind_param("ssss", $username, $email, $hashedPassword, $token);
     if (!$stmt->execute()) {
         die("Insert failed: " . $stmt->error);
     }
-    $user_id = $stmt->insert_id;
-    
-    $token = bin2hex(random_bytes(32));
-    $expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
-    if (!$token) {
-        die("Token generation failed");
-    }
-    
-    $stmt = $conn->prepare("INSERT INTO email_verification (user_id, token, expires_at) VALUES (?, ?, ?)");
-    if (!$stmt) die("Token prepare failed: " . $conn->error);
-
-    $stmt->bind_param("iss", $user_id, $token, $expiry);
-
-    if (!$stmt->execute()) {
-        die("Token insert failed: " . $stmt->error);
-    }
 $base_url = "http://localhost/";
 $link = $base_url . "auth/verify.php?token=" . urlencode($token);
 $message = "
