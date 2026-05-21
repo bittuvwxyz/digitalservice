@@ -1,6 +1,5 @@
 ﻿<?php
-require_once __DIR__ . '/../db.php';
-
+require_once __DIR__ . '/../config/db.php';
 $limit = 1;
 $blog_page = isset($_GET['blog_page']) ? (int) $_GET['blog_page'] : 1;
 if ($blog_page < 1) {
